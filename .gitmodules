@@ -1,0 +1,3 @@
+[submodule "pokemon_data"]
+	path = pokemon_data
+	url = https://github.com/kotofurumiya/pokemon_data
