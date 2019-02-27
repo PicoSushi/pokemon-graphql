@@ -72,12 +72,34 @@ def main():
         all_evolutions = []
 
         for pokemon in pokemons:
+            c.execute(
+                'INSERT INTO pokemon (name, form, is_mega_evolution, stats) VALUES (?, ?, ?, ?)',
+                (
+                    pokemon['name'],
+                    pokemon['form'],
+                    pokemon['isMegaEvolution'],
+                    str(pokemon['stats']),
+                ),
+            )
             types = pokemon['types']
-            for type_ in types:
-                if type_ not in all_types:
-                    print(type_)
-                    c.execute('INSERT INTO type (label) VALUES (?)', (type_, ))
-                    all_types.append(type_)
+            for t in types:
+                if t not in all_types:
+                    c.execute('INSERT INTO type (label) VALUES (?)', (t, ))
+                    all_types.append(t)
+                # c.execute('INSERT INTO pokemon_type ()')
+            abilities = pokemon['abilities']
+            for a in abilities:
+                if a not in all_abilities:
+                    c.execute('INSERT INTO ability (label) VALUES (?)', (a, ))
+                    all_abilities.append(a)
+
+            hidden_abilities = pokemon['hiddenAbilities']
+            for a in hidden_abilities:
+                if a not in all_abilities:
+                    c.execute('INSERT INTO ability (label) VALUES (?)', (a, ))
+                    all_abilities.append(a)
+
+            stats = pokemon['stats']
 
         conn.commit()
 
